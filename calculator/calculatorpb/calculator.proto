@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package calculator;
+
+message SumRequest {
+	int32 first_number = 1;
+	int32 second_number = 2;
+}
+
+
+message SumResponse{
+	int32 sum_result = 1;
+}
+
+message PrimeNumberDecompositionRequest {
+	int32 number = 1;
+}
+
+message PrimeNumberDecompositionResponse {
+	int32 prime_factor = 1;
+}
+
+message ComputeAverageRequest {
+	int32 number = 1;
+}
+
+message ComputeAverageResponse {
+	float average = 1;
+}
+
+message FindMaxNumberRequest {
+	int32 number = 1;
+}
+
+message FindMaxNumberResponse {
+	int32 max_number = 1;
+}
+
+message SquareRootRequest {
+	int64 number = 1;
+}
+
+message SquareRootResponse {
+	double number_root = 1;
+}
+
+service CalculatorService {
+	//Unary Streaming
+	rpc Sum(SumRequest) returns (SumResponse) {};
+	
+	//Server Side Streaming
+	rpc PrimeNumberDecomposition(PrimeNumberDecompositionRequest)
+	returns (stream PrimeNumberDecompositionResponse) {};
+
+	//Client Side Streaming
+	rpc ComputeAverage(stream ComputeAverageRequest) returns(ComputeAverageResponse) {};
+
+	//Bi-directional streaming
+	rpc FindMaxNumber(stream FindMaxNumberRequest) returns (stream FindMaxNumberResponse) {};
+
+	//Error Handling demonstration
+	rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
+}
